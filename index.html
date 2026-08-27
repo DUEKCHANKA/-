@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>한국삼공 매출현황 (골프장 / 특판) 대시보드</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>한국삼공 매출현황 (골프장 / 특판) - (단위: 백만)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN -->
@@ -14,10 +14,11 @@
         body {
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             background-color: #f8fafc;
+            -webkit-tap-highlight-color: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
             background: #f1f5f9;
@@ -27,20 +28,16 @@
             border-radius: 4px;
         }
         .cust-card {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.15s ease-in-out;
         }
-        .cust-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
-        }
-        .tab-btn.active {
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        .cust-card:active {
+            transform: scale(0.99);
         }
         .fade-in {
-            animation: fadeIn 0.25s ease-in-out forwards;
+            animation: fadeIn 0.2s ease-in-out forwards;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
+            from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @media print {
@@ -52,185 +49,188 @@
 <body class="text-slate-800 antialiased min-h-screen flex flex-col">
 
     <!-- Top Navigation Bar -->
-    <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/30">
-                    <i class="fa-solid fa-chart-line text-lg"></i>
+    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5">
+            <div class="flex items-center space-x-2.5">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/30 flex-shrink-0">
+                    <i class="fa-solid fa-chart-pie text-sm sm:text-lg"></i>
                 </div>
                 <div>
-                    <div class="flex items-center gap-2">
-                        <h1 class="text-lg font-bold tracking-tight text-white">한국삼공 매출현황 (골프장 / 특판)</h1>
-                        <span class="bg-emerald-500/20 text-emerald-300 text-xs px-2.5 py-0.5 rounded-full font-semibold border border-emerald-500/30">2026.08.27 기준</span>
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                        <h1 class="text-base sm:text-lg font-bold tracking-tight text-white leading-snug">한국삼공 매출현황</h1>
+                        <span class="bg-blue-500/20 text-blue-300 text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-bold border border-blue-500/30">단위: 백만원</span>
+                        <span class="bg-emerald-500/20 text-emerald-300 text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-bold border border-emerald-500/30">2026.08.27</span>
                     </div>
-                    <p class="text-xs text-slate-400">골프장·특판 사업부문별 실시간 연동 분석 대시보드</p>
+                    <p class="text-[11px] text-slate-400">골프장·특판 사업부문 실시간 출고 대시보드 (금액단위: 백만원)</p>
                 </div>
             </div>
-            <div class="flex items-center gap-2.5 no-print">
-                <button onclick="exportCSV()" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg border border-slate-700 transition">
-                    <i class="fa-solid fa-file-csv text-emerald-400"></i> 원장 CSV 저장
+            <div class="flex items-center gap-2 no-print self-end sm:self-auto">
+                <button onclick="exportCSV()" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg border border-slate-700 transition">
+                    <i class="fa-solid fa-file-csv text-emerald-400"></i> 원장 CSV
                 </button>
-                <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg shadow-sm transition">
-                    <i class="fa-solid fa-print"></i> 인쇄 / PDF
+                <button onclick="window.print()" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-sm transition">
+                    <i class="fa-solid fa-print"></i> 인쇄
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Dynamic Content Wrapper -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 flex-1 w-full">
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-6 flex-1 w-full">
 
         <!-- ========================================== -->
         <!-- SCREEN 1: MAIN LIST & DASHBOARD VIEW       -->
         <!-- ========================================== -->
-        <div id="screen-main" class="space-y-6 fade-in">
+        <div id="screen-main" class="space-y-4 sm:space-y-6 fade-in">
 
-            <!-- 1. BIG SEGMENT SWITCHER (골프장 vs 특판 크게 선택) -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- 1. BIG SEGMENT SWITCHER TABS (단위: 백만 표기) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4">
                 
-                <!-- 전체 통합 버튼 -->
+                <!-- 전체 통합 -->
                 <button onclick="switchTab('ALL')" id="tab-ALL" 
-                        class="tab-btn p-5 rounded-2xl border text-left transition-all relative overflow-hidden bg-white border-slate-200 hover:border-slate-400">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">전체 사업부 통합</span>
-                        <span class="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-sm font-bold">
+                        class="tab-btn p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border text-left transition-all relative overflow-hidden bg-white border-slate-200 shadow-2xs">
+                    <div class="flex items-center justify-between mb-1 sm:mb-2">
+                        <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-500">전체 통합 (단위: 백만)</span>
+                        <span class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center text-xs font-bold">
                             <i class="fa-solid fa-layer-group"></i>
                         </span>
                     </div>
-                    <div class="text-2xl font-black text-slate-900">₩3,707,327,650</div>
-                    <div class="flex items-center justify-between text-xs text-slate-500 mt-2 font-medium">
-                        <span>총 19개 매출처</span>
+                    <div class="text-xl sm:text-2xl font-black text-slate-900">3,707.3 <span class="text-xs sm:text-sm font-bold text-slate-500">백만</span></div>
+                    <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-500 mt-1 sm:mt-2 font-medium">
+                        <span>19개사 (VAT포함 4,078.1백만)</span>
                         <span class="font-bold text-slate-700">100.0%</span>
                     </div>
-                    <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1.5 bg-slate-900"></div>
+                    <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1 sm:h-1.5 bg-slate-900"></div>
                 </button>
 
-                <!-- 골프장 부문 버튼 (이앤엘, 플러스존, 에이엘그린 등 8개사) -->
+                <!-- ⛳ 골프장 부문 (8개사) -->
                 <button onclick="switchTab('GOLF')" id="tab-GOLF" 
-                        class="tab-btn p-5 rounded-2xl border text-left transition-all relative overflow-hidden bg-white border-slate-200 hover:border-emerald-400">
-                    <div class="flex items-center justify-between mb-2">
+                        class="tab-btn p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border text-left transition-all relative overflow-hidden bg-white border-slate-200 shadow-2xs">
+                    <div class="flex items-center justify-between mb-1 sm:mb-2">
                         <div class="flex items-center gap-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">⛳ 골프장 부문</span>
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-emerald-700">⛳ 골프장 부문 (단위: 백만)</span>
                         </div>
-                        <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm font-bold">
+                        <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs font-bold">
                             <i class="fa-solid fa-flag"></i>
                         </span>
                     </div>
-                    <div class="text-2xl font-black text-emerald-950">₩2,119,612,550</div>
-                    <div class="flex items-center justify-between text-xs text-slate-500 mt-2 font-medium">
-                        <span>8개 전담 매출처</span>
-                        <span class="font-extrabold text-emerald-600">57.2%</span>
+                    <div class="text-xl sm:text-2xl font-black text-emerald-950">2,119.6 <span class="text-xs sm:text-sm font-bold text-emerald-700">백만</span></div>
+                    <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-500 mt-1 sm:mt-2 font-medium">
+                        <span>8개 거래처 (VAT포함 2,331.6백만)</span>
+                        <span class="font-black text-emerald-600">57.2%</span>
                     </div>
-                    <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1.5 bg-emerald-600"></div>
+                    <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1 sm:h-1.5 bg-emerald-600"></div>
                 </button>
 
-                <!-- 특판 부문 버튼 (나머지 11개사) -->
+                <!-- 🏢 특판 부문 (11개사) -->
                 <button onclick="switchTab('SPECIAL')" id="tab-SPECIAL" 
-                        class="tab-btn p-5 rounded-2xl border text-left transition-all relative overflow-hidden bg-white border-slate-200 hover:border-blue-400">
-                    <div class="flex items-center justify-between mb-2">
+                        class="tab-btn p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border text-left transition-all relative overflow-hidden bg-white border-slate-200 shadow-2xs">
+                    <div class="flex items-center justify-between mb-1 sm:mb-2">
                         <div class="flex items-center gap-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-                            <span class="text-xs font-bold uppercase tracking-wider text-blue-700">🏢 특판(일반) 부문</span>
+                            <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+                            <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-blue-700">🏢 특판(일반) 부문 (단위: 백만)</span>
                         </div>
-                        <span class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm font-bold">
+                        <span class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold">
                             <i class="fa-solid fa-building"></i>
                         </span>
                     </div>
-                    <div class="text-2xl font-black text-blue-950">₩1,587,715,100</div>
-                    <div class="flex items-center justify-between text-xs text-slate-500 mt-2 font-medium">
-                        <span>11개 유통 매출처</span>
-                        <span class="font-extrabold text-blue-600">42.8%</span>
+                    <div class="text-xl sm:text-2xl font-black text-blue-950">1,587.7 <span class="text-xs sm:text-sm font-bold text-blue-700">백만</span></div>
+                    <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-500 mt-1 sm:mt-2 font-medium">
+                        <span>11개 거래처 (VAT포함 1,746.5백만)</span>
+                        <span class="font-black text-blue-600">42.8%</span>
                     </div>
-                    <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1.5 bg-blue-600"></div>
+                    <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1 sm:h-1.5 bg-blue-600"></div>
                 </button>
 
             </div>
 
-            <!-- Visual Charts & Overview Row -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 lg:col-span-2 flex flex-col justify-between">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-                            <h2 class="text-sm font-bold text-slate-800" id="barChartTitle">부문별 주요 매출처 판매금액 TOP (클릭 시 상세페이지 이동)</h2>
+            <!-- Charts Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+                <!-- Bar Chart -->
+                <div class="bg-white p-4 sm:p-5 rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 lg:col-span-2 flex flex-col justify-between">
+                    <div class="flex items-center justify-between mb-2 sm:mb-3">
+                        <div class="flex items-center gap-1.5 sm:gap-2">
+                            <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+                            <h2 class="text-xs sm:text-sm font-bold text-slate-800" id="barChartTitle">주요 매출처 순위 TOP 6 (클릭 시 이동)</h2>
                         </div>
-                        <span class="text-xs text-slate-400">단위: 백만원</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded">단위: 백만원</span>
                     </div>
-                    <div class="relative h-64 w-full">
+                    <div class="relative h-52 sm:h-60 w-full">
                         <canvas id="mainBarChart"></canvas>
                     </div>
                 </div>
 
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
-                            <h2 class="text-sm font-bold text-slate-800">품목군별 매출 비중</h2>
+                <!-- Donut Chart -->
+                <div class="bg-white p-4 sm:p-5 rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div class="flex items-center justify-between mb-2 sm:mb-3">
+                        <div class="flex items-center gap-1.5 sm:gap-2">
+                            <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+                            <h2 class="text-xs sm:text-sm font-bold text-slate-800">품목군별 매출 비중</h2>
                         </div>
-                        <span class="text-xs text-slate-400">점유율(%)</span>
+                        <span class="text-[10px] sm:text-xs text-slate-400">점유율(%)</span>
                     </div>
-                    <div class="relative h-64 w-full flex items-center justify-center">
+                    <div class="relative h-52 sm:h-60 w-full flex items-center justify-center">
                         <canvas id="mainCategoryChart"></canvas>
                     </div>
                 </div>
             </div>
 
-            <!-- Customer Cards / List Section -->
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <!-- Customer Table Section -->
+            <div class="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                 
-                <!-- Filter Bar (금액순 / 가나다순) -->
-                <div class="p-5 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div class="flex items-center gap-3">
-                        <h3 class="font-extrabold text-slate-900 text-base" id="listSectionTitle">매출처별 판매현황</h3>
-                        <span class="bg-blue-100 text-blue-800 text-xs px-2.5 py-0.5 rounded-full font-bold" id="listCountBadge">19개사</span>
+                <!-- Filter Bar -->
+                <div class="p-3.5 sm:p-4 border-b border-slate-100 bg-slate-50/70 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                    <div class="flex items-center justify-between sm:justify-start gap-2">
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-extrabold text-slate-900 text-sm sm:text-base" id="listSectionTitle">매출처별 판매현황</h3>
+                            <span class="bg-blue-100 text-blue-800 text-[11px] px-2 py-0.5 rounded-full font-bold" id="listCountBadge">19개사</span>
+                            <span class="text-[11px] text-slate-500 font-bold bg-slate-200/70 px-2 py-0.5 rounded">(단위: 백만)</span>
+                        </div>
+                        <span class="text-[10px] text-blue-600 font-semibold sm:hidden bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                            👉 좌우 스크롤
+                        </span>
                     </div>
 
-                    <div class="flex flex-wrap items-center gap-2.5">
-                        <!-- Search Box -->
-                        <div class="relative min-w-[200px]">
-                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                    <div class="flex items-center gap-2">
+                        <div class="relative flex-1 sm:w-56">
+                            <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                             <input type="text" id="custSearchInput" placeholder="매출처명/코드 검색..." 
-                                   class="w-full pl-8 pr-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500"
+                                   class="w-full pl-7 pr-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500"
                                    oninput="renderCustomerList()">
                         </div>
-
-                        <!-- Sort Buttons (금액순 / 가나다순) -->
-                        <div class="flex items-center bg-slate-200/80 p-0.5 rounded-lg text-xs">
-                            <button onclick="setSort('sales')" id="sort-sales" class="px-3 py-1 rounded-md bg-white text-blue-700 font-bold shadow-xs">금액 높은순</button>
-                            <button onclick="setSort('name')" id="sort-name" class="px-3 py-1 rounded-md text-slate-600 hover:text-slate-900 font-medium">가나다순</button>
+                        <div class="flex items-center bg-slate-200/80 p-0.5 rounded-lg text-xs flex-shrink-0">
+                            <button onclick="setSort('sales')" id="sort-sales" class="px-2.5 py-1 rounded-md bg-white text-blue-700 font-bold shadow-2xs">금액순</button>
+                            <button onclick="setSort('name')" id="sort-name" class="px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-medium">가나다순</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Customer Table -->
+                <!-- Table Container with Touch Scroll -->
                 <div class="overflow-x-auto custom-scrollbar">
-                    <table class="w-full text-left border-collapse text-xs">
+                    <table class="w-full text-left border-collapse min-w-[580px]">
                         <thead class="bg-slate-100/90 text-slate-600 uppercase text-[11px] font-bold border-b border-slate-200">
                             <tr>
-                                <th class="py-3 px-4 text-center w-12">순위</th>
-                                <th class="py-3 px-3">구분</th>
-                                <th class="py-3 px-3">매출처명</th>
-                                <th class="py-3 px-3">코드</th>
-                                <th class="py-3 px-3">지역</th>
-                                <th class="py-3 px-4 text-right">판매금액 (공급가)</th>
-                                <th class="py-3 px-4 text-right">합계금액 (VAT포함)</th>
-                                <th class="py-3 px-3 text-right">매출비중</th>
-                                <th class="py-3 px-4 text-center">품목상세</th>
+                                <th class="py-2.5 px-3 text-center w-10">No</th>
+                                <th class="py-2.5 px-2.5 w-20">구분</th>
+                                <th class="py-2.5 px-3">매출처명</th>
+                                <th class="py-2.5 px-2.5">코드</th>
+                                <th class="py-2.5 px-3 text-right">판매금액 <span class="text-[10px] text-blue-600 font-bold">(백만)</span></th>
+                                <th class="py-2.5 px-3 text-right">합계 <span class="text-[10px] text-slate-500 font-bold">(백만)</span></th>
+                                <th class="py-2.5 px-2.5 text-right w-16">비중</th>
+                                <th class="py-2.5 px-3 text-center w-20">조회</th>
                             </tr>
                         </thead>
-                        <tbody id="custTableBody" class="divide-y divide-slate-100">
+                        <tbody id="custTableBody" class="divide-y divide-slate-100 text-xs">
                             <!-- Populated via JS -->
                         </tbody>
                     </table>
                 </div>
 
-                <!-- Footer Summary of List -->
-                <div class="p-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between text-xs text-slate-600 font-medium gap-2">
-                    <span id="listFooterSummaryText">현재 선택된 19개 매출처 합계</span>
-                    <div class="flex items-center gap-4">
-                        <span>총 판매금액: <strong class="text-blue-700 font-black text-sm" id="listFooterTotalSales">₩3,707,327,650</strong></span>
-                    </div>
+                <!-- Footer Summary -->
+                <div class="p-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600 font-semibold">
+                    <span id="listFooterSummaryText">19개 매출처 합계</span>
+                    <span>총 판매액: <strong class="text-blue-700 font-black text-sm" id="listFooterTotalSales">3,707.3 백만</strong></span>
                 </div>
 
             </div>
@@ -241,114 +241,111 @@
         <!-- ========================================== -->
         <!-- SCREEN 2: CUSTOMER DETAIL DRILLDOWN VIEW   -->
         <!-- ========================================== -->
-        <div id="screen-detail" class="hidden space-y-6 fade-in">
+        <div id="screen-detail" class="hidden space-y-4 sm:space-y-6 fade-in">
 
-            <!-- Detail Header & Back Navigation Button -->
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+            <!-- Detail Header & Sticky Back Navigation -->
+            <div class="bg-white p-4 sm:p-5 rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 space-y-3.5">
                 
-                <!-- Back Button & Breadcrumbs -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                <!-- Back Button -->
+                <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
                     <button onclick="goToMainScreen()" 
-                            class="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold rounded-xl shadow-md transition group">
-                        <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition"></i>
-                        <span>← 전체 목록으로 돌아가기 (뒤로가기)</span>
+                            class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold rounded-xl shadow-sm transition active:scale-95">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>← 전체 목록으로 (뒤로가기)</span>
                     </button>
-
-                    <div class="text-xs text-slate-400 flex items-center gap-1.5 font-medium">
-                        <span class="hover:text-slate-600 cursor-pointer" onclick="goToMainScreen()">대시보드 홈</span>
-                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
-                        <span id="detailBreadcrumbSegment">골프장</span>
-                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
-                        <span class="text-slate-800 font-bold" id="detailBreadcrumbName">평택 이앤엘</span>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">단위: 백만원</span>
+                        <span id="detailBadgeSegment" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">⛳ 골프장</span>
                     </div>
                 </div>
 
-                <!-- Customer Identity Card Banner -->
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-1">
-                    <div class="space-y-1.5">
-                        <div class="flex items-center gap-2.5">
-                            <span id="detailBadgeSegment" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">⛳ 골프장</span>
-                            <span class="text-xs text-slate-400 font-mono" id="detailCustCode">코드: 300522</span>
-                            <span class="text-xs text-slate-500 font-medium" id="detailCustRegion">지역: 평택시</span>
-                        </div>
-                        <h2 class="text-2xl sm:text-3xl font-black text-slate-900" id="detailCustName">평택 이앤엘</h2>
+                <!-- Customer Identity -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+                    <div>
+                        <div class="text-[11px] text-slate-400 font-mono" id="detailCustMeta">코드: 300522 | 지역: 평택시</div>
+                        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-0.5" id="detailCustName">평택 이앤엘</h2>
                     </div>
 
-                    <!-- Key Metrics for Selected Customer -->
-                    <div class="flex flex-wrap items-center gap-3">
-                        <div class="bg-blue-50 border border-blue-100 px-4 py-2.5 rounded-xl text-left">
-                            <div class="text-[11px] font-bold text-blue-600 uppercase">총 판매금액 (공급가)</div>
-                            <div class="text-xl sm:text-2xl font-black text-blue-900" id="detailSalesAmount">₩839,708,100</div>
+                    <!-- Metrics Cards -->
+                    <div class="grid grid-cols-2 gap-2 sm:flex sm:items-center">
+                        <div class="bg-blue-50/80 border border-blue-100 p-2.5 sm:px-4 sm:py-2 rounded-xl text-left">
+                            <div class="text-[10px] sm:text-[11px] font-bold text-blue-600 uppercase">총 판매금액 (공급가)</div>
+                            <div class="text-base sm:text-xl font-black text-blue-900" id="detailSalesAmount">839.7 <span class="text-xs font-bold text-blue-700">백만</span></div>
                         </div>
-                        <div class="bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-xl text-left">
-                            <div class="text-[11px] font-bold text-slate-500 uppercase">합계금액 (VAT포함)</div>
-                            <div class="text-base sm:text-lg font-extrabold text-slate-800" id="detailTotalAmount">₩923,678,910</div>
+                        <div class="bg-slate-50 border border-slate-200 p-2.5 sm:px-4 sm:py-2 rounded-xl text-left">
+                            <div class="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase">합계금액 (VAT포함)</div>
+                            <div class="text-xs sm:text-base font-extrabold text-slate-800 mt-0.5 sm:mt-0" id="detailTotalAmount">923.7 <span class="text-[11px] font-medium text-slate-500">백만</span></div>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Product Visual Progress Bars -->
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+            <!-- Product Progress Bars -->
+            <div class="bg-white p-4 sm:p-5 rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 space-y-2.5">
                 <div class="flex items-center justify-between">
-                    <h4 class="text-xs font-bold text-slate-800 flex items-center gap-2">
+                    <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                         <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-                        해당 매출처 품목별 판매액 TOP 5 비중
+                        품목별 판매액 TOP 5 점유율
                     </h4>
-                    <span class="text-[11px] text-slate-400">매출 기여율</span>
+                    <span class="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded">단위: 백만</span>
                 </div>
                 <div id="detailProductMiniBars" class="space-y-2 text-xs">
                     <!-- Populated dynamically via JS -->
                 </div>
             </div>
 
-            <!-- Product Breakdown Table (평균단가 컬럼 없음, 금액순 정렬) -->
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <!-- Product Breakdown Table -->
+            <div class="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                 
-                <div class="p-4 border-b border-slate-100 bg-slate-50/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-box-open text-blue-600"></i>
-                        <h3 class="font-bold text-slate-900 text-sm">품목별 출고 및 판매 상세 명세</h3>
-                        <span class="text-xs text-slate-500" id="detailProductCountText">(총 16개 품목)</span>
+                <div class="p-3.5 border-b border-slate-100 bg-slate-50/70 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                    <div class="flex items-center justify-between sm:justify-start gap-2">
+                        <div class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-box-open text-blue-600 text-xs"></i>
+                            <h3 class="font-bold text-slate-900 text-xs sm:text-sm">품목별 출고 상세 명세</h3>
+                            <span class="text-[11px] text-slate-500" id="detailProductCountText">(16개 품목)</span>
+                            <span class="text-[10px] text-slate-500 font-bold bg-slate-200/70 px-1.5 py-0.5 rounded">(단위: 백만)</span>
+                        </div>
+                        <span class="text-[10px] text-blue-600 font-semibold sm:hidden bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                            👉 좌우 스크롤
+                        </span>
                     </div>
 
                     <div class="flex items-center gap-2">
                         <input type="text" id="detailProductSearchInput" placeholder="품명 검색..." 
-                               class="px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
+                               class="w-full sm:w-44 px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
                                oninput="renderProductDetailTable()">
-                        <button onclick="exportDetailCustCSV()" class="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold transition">
-                            <i class="fa-solid fa-download text-emerald-400"></i> 이 매출처 CSV 저장
+                        <button onclick="exportDetailCustCSV()" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold flex-shrink-0 transition">
+                            <i class="fa-solid fa-download text-emerald-400"></i> CSV
                         </button>
                     </div>
                 </div>
 
                 <div class="overflow-x-auto custom-scrollbar">
-                    <table class="w-full text-left border-collapse text-xs">
+                    <table class="w-full text-left border-collapse min-w-[540px]">
                         <thead class="bg-slate-100/90 text-slate-600 uppercase text-[11px] font-bold border-b border-slate-200">
                             <tr>
-                                <th class="py-3 px-4 text-center w-10">No</th>
-                                <th class="py-3 px-3">품명</th>
-                                <th class="py-3 px-2">규격</th>
-                                <th class="py-3 px-3">품목분류</th>
-                                <th class="py-3 px-3">품번</th>
-                                <th class="py-3 px-4 text-right">출고수량</th>
-                                <th class="py-3 px-4 text-right">판매금액 (공급가)</th>
-                                <th class="py-3 px-4 text-right w-20">매출기여도</th>
+                                <th class="py-2.5 px-3 text-center w-8">No</th>
+                                <th class="py-2.5 px-3">품명</th>
+                                <th class="py-2.5 px-2">규격</th>
+                                <th class="py-2.5 px-2.5">분류</th>
+                                <th class="py-2.5 px-3 text-right">출고수량</th>
+                                <th class="py-2.5 px-3 text-right">판매금액 <span class="text-[10px] text-blue-600 font-bold">(백만)</span></th>
+                                <th class="py-2.5 px-3 text-right w-16">기여도</th>
                             </tr>
                         </thead>
-                        <tbody id="detailProductTableBody" class="divide-y divide-slate-100">
+                        <tbody id="detailProductTableBody" class="divide-y divide-slate-100 text-xs">
                             <!-- Populated via JS -->
                         </tbody>
                     </table>
                 </div>
 
-                <!-- Footer Summary of Product Table -->
-                <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center text-xs text-slate-700 font-semibold">
-                    <span id="detailProductTableFooterCount">전체 품목 합계</span>
-                    <div class="flex items-center gap-5">
-                        <span>총 출고수량: <strong class="text-slate-900 font-bold" id="detailProductFooterQty">45,200</strong> EA</span>
-                        <span>총 판매금액: <strong class="text-blue-700 font-black text-sm" id="detailProductFooterSales">₩839,708,100</strong></span>
+                <!-- Footer Summary -->
+                <div class="p-3 bg-slate-50 border-t border-slate-200 flex justify-between items-center text-xs text-slate-700 font-semibold">
+                    <span id="detailProductTableFooterCount">품목 합계</span>
+                    <div class="flex items-center gap-3">
+                        <span class="hidden sm:inline">총 수량: <strong class="text-slate-900" id="detailProductFooterQty">45,200</strong> EA</span>
+                        <span>총 판매금액: <strong class="text-blue-700 font-black text-sm" id="detailProductFooterSales">839.7 백만</strong></span>
                     </div>
                 </div>
 
@@ -359,22 +356,17 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 text-xs py-5 mt-10 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div>
-                <span class="font-bold text-slate-200">한국삼공 출고관리 분석 시스템</span> | 골프장 & 특판 부문 분리형 대시보드
-            </div>
-            <div class="text-slate-500">
-                2026-08-27 기준 데이터 연동
-            </div>
+    <footer class="bg-slate-900 text-slate-400 text-xs py-4 mt-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:flex sm:justify-between sm:text-left text-[11px]">
+            <div><strong class="text-slate-200">한국삼공 출고관리 분석 대시보드</strong> | 2026-08-27 (단위: 백만원)</div>
+            <div class="text-slate-500 mt-1 sm:mt-0">골프장 & 특판 백만 단위 최적화 버전</div>
         </div>
     </footer>
 
-    <!-- EMBEDDED DATA & SINGLE PAGE APPLICATION SCRIPT -->
+    <!-- SCRIPT & DATA -->
     <script>
-        // Full Dataset: Tagged with category (GOLF vs SPECIAL)
         const customersData = [
-            // --- 1. GOLF SEGMENT (8개사) ---
+            // GOLF (8)
             {
                 segment: "GOLF", cust_code: "300522", cust_name: "평택 이앤엘", region: "평택시", sales_amount: 839708100, qty: 45200, vat: 83970810, total_amount: 923678910, share_total: 22.65,
                 products: [
@@ -466,7 +458,7 @@
                 ]
             },
 
-            // --- 2. SPECIAL / GENERAL SEGMENT (11개사) ---
+            // SPECIAL (11)
             {
                 segment: "SPECIAL", cust_code: "300681", cust_name: "에스지 아그로(안동)", region: "안동시", sales_amount: 471096800, qty: 100622, vat: 47109680, total_amount: 518206480, share_total: 12.71,
                 products: [
@@ -646,33 +638,30 @@
             }
         ];
 
-        // State Variables
-        let currentTab = 'ALL'; // 'ALL', 'GOLF', 'SPECIAL'
-        let currentSort = 'sales'; // 'sales' or 'name' (수량순 제거)
+        let currentTab = 'ALL';
+        let currentSort = 'sales';
         let selectedCust = null;
         let mainBarChartInstance = null;
         let mainCatChartInstance = null;
 
-        const TOTAL_ALL_SALES = 3707327650;
-
-        // Helpers
-        function formatWon(num) {
-            return '₩' + (num || 0).toLocaleString('ko-KR');
+        // Million Formatter
+        function formatMillion(num) {
+            if (!num || num === 0) return '0.0';
+            const m = num / 1000000;
+            return m.toLocaleString('ko-KR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
         }
+
         function formatNum(num) {
             return (num || 0).toLocaleString('ko-KR');
         }
 
-        // Init on DOM ready
         document.addEventListener('DOMContentLoaded', () => {
             switchTab('ALL');
         });
 
-        // 1. Switch Segment Tab
         function switchTab(tabKey) {
             currentTab = tabKey;
             
-            // Highlight Tab Buttons
             ['ALL', 'GOLF', 'SPECIAL'].forEach(key => {
                 const btn = document.getElementById(`tab-${key}`);
                 const indicator = btn.querySelector('.active-indicator');
@@ -685,17 +674,15 @@
                 }
             });
 
-            // Update Titles
-            let titleText = "매출처별 판매현황 (전체 통합)";
-            if (tabKey === 'GOLF') titleText = "⛳ 골프장 부문 전담 매출처 실적";
-            else if (tabKey === 'SPECIAL') titleText = "🏢 특판(일반) 부문 매출처 실적";
+            let titleText = "매출처별 판매현황";
+            if (tabKey === 'GOLF') titleText = "⛳ 골프장 부문 매출처";
+            else if (tabKey === 'SPECIAL') titleText = "🏢 특판(일반) 부문 매출처";
             document.getElementById('listSectionTitle').textContent = titleText;
 
             renderCustomerList();
             updateCharts();
         }
 
-        // 2. Filter Customers for current Tab
         function getFilteredCustomers() {
             let list = [...customersData];
             if (currentTab !== 'ALL') {
@@ -716,7 +703,6 @@
             return list;
         }
 
-        // 3. Render Main Screen Table / Cards
         function renderCustomerList() {
             const list = getFilteredCustomers();
             const tbody = document.getElementById('custTableBody');
@@ -728,86 +714,73 @@
             list.forEach((cust, idx) => {
                 subtotal += cust.sales_amount;
                 const tr = document.createElement('tr');
-                tr.className = 'cust-card hover:bg-blue-50/60 transition cursor-pointer border-b border-slate-100';
+                tr.className = 'cust-card hover:bg-blue-50/50 transition cursor-pointer border-b border-slate-100';
                 tr.onclick = () => openDetailScreen(cust.cust_code);
 
                 const isGolf = cust.segment === 'GOLF';
                 const segBadge = isGolf 
-                    ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-200">⛳ 골프장</span>'
-                    : '<span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-100 text-blue-800 border border-blue-200">🏢 특판</span>';
+                    ? '<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">⛳골프장</span>'
+                    : '<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">🏢특판</span>';
 
-                const rankClass = idx === 0 ? 'text-amber-500 font-black' : (idx === 1 ? 'text-slate-500 font-bold' : (idx === 2 ? 'text-amber-700 font-bold' : 'text-slate-400'));
+                const rankClass = idx === 0 ? 'text-amber-500 font-black' : (idx === 1 ? 'text-slate-400 font-bold' : (idx === 2 ? 'text-amber-700 font-bold' : 'text-slate-400'));
 
                 tr.innerHTML = `
-                    <td class="py-3 px-4 text-center ${rankClass} text-xs">${idx + 1}</td>
-                    <td class="py-3 px-3">${segBadge}</td>
-                    <td class="py-3 px-3">
-                        <div class="font-bold text-slate-900 text-xs hover:text-blue-600 transition flex items-center gap-1.5">
-                            ${cust.cust_name}
-                        </div>
+                    <td class="py-2.5 px-3 text-center ${rankClass}">${idx + 1}</td>
+                    <td class="py-2.5 px-2.5">${segBadge}</td>
+                    <td class="py-2.5 px-3">
+                        <div class="font-bold text-slate-900 hover:text-blue-600 transition">${cust.cust_name}</div>
                     </td>
-                    <td class="py-3 px-3 text-slate-400 font-mono text-[11px]">${cust.cust_code}</td>
-                    <td class="py-3 px-3 text-slate-500 text-xs">${cust.region}</td>
-                    <td class="py-3 px-4 text-right font-black text-slate-900 text-xs">${formatWon(cust.sales_amount)}</td>
-                    <td class="py-3 px-4 text-right text-slate-500 font-medium text-xs">${formatWon(cust.total_amount)}</td>
-                    <td class="py-3 px-3 text-right font-bold text-blue-700 text-xs">${cust.share_total}%</td>
-                    <td class="py-3 px-4 text-center">
-                        <button class="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-[11px] transition shadow-2xs">
-                            상세보기 <i class="fa-solid fa-angle-right text-[10px] ml-0.5"></i>
+                    <td class="py-2.5 px-2.5 text-slate-400 font-mono text-[11px]">${cust.cust_code}</td>
+                    <td class="py-2.5 px-3 text-right font-black text-slate-900">${formatMillion(cust.sales_amount)}</td>
+                    <td class="py-2.5 px-3 text-right text-slate-500">${formatMillion(cust.total_amount)}</td>
+                    <td class="py-2.5 px-2.5 text-right font-bold text-blue-700">${cust.share_total}%</td>
+                    <td class="py-2.5 px-3 text-center">
+                        <button class="px-2 py-1 rounded bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-[10px] transition">
+                            상세
                         </button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
 
-            document.getElementById('listFooterTotalSales').textContent = formatWon(subtotal);
-            document.getElementById('listFooterSummaryText').textContent = `선택된 ${list.length}개 매출처 판매합계`;
+            document.getElementById('listFooterTotalSales').textContent = `${formatMillion(subtotal)} 백만`;
+            document.getElementById('listFooterSummaryText').textContent = `${list.length}개 매출처 합계 (단위: 백만)`;
         }
 
-        // 4. Open Detail Screen (화면 전환!)
         function openDetailScreen(custCode) {
             selectedCust = customersData.find(c => c.cust_code === custCode);
             if (!selectedCust) return;
 
-            // Hide Main Screen & Show Detail Screen
             document.getElementById('screen-main').classList.add('hidden');
             document.getElementById('screen-detail').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Breadcrumbs & Header
             const isGolf = selectedCust.segment === 'GOLF';
-            document.getElementById('detailBreadcrumbSegment').textContent = isGolf ? '골프장 부문' : '특판 부문';
-            document.getElementById('detailBreadcrumbName').textContent = selectedCust.cust_name;
-
             const badge = document.getElementById('detailBadgeSegment');
             if (isGolf) {
-                badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
-                badge.textContent = '⛳ 골프장 부문 전담';
+                badge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
+                badge.textContent = '⛳ 골프장 부문';
             } else {
-                badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200';
+                badge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-800 border border-blue-200';
                 badge.textContent = '🏢 특판(일반) 부문';
             }
 
             document.getElementById('detailCustName').textContent = selectedCust.cust_name;
-            document.getElementById('detailCustCode').textContent = `매출처코드: ${selectedCust.cust_code}`;
-            document.getElementById('detailCustRegion').textContent = `소재지역: ${selectedCust.region}`;
-            document.getElementById('detailSalesAmount').textContent = formatWon(selectedCust.sales_amount);
-            document.getElementById('detailTotalAmount').textContent = formatWon(selectedCust.total_amount);
-            document.getElementById('detailProductCountText').textContent = `(총 ${selectedCust.products.length}개 품목)`;
+            document.getElementById('detailCustMeta').textContent = `코드: ${selectedCust.cust_code} | 지역: ${selectedCust.region}`;
+            document.getElementById('detailSalesAmount').innerHTML = `${formatMillion(selectedCust.sales_amount)} <span class="text-xs font-bold text-blue-700">백만</span>`;
+            document.getElementById('detailTotalAmount').innerHTML = `${formatMillion(selectedCust.total_amount)} <span class="text-[11px] font-medium text-slate-500">백만</span>`;
+            document.getElementById('detailProductCountText').textContent = `(${selectedCust.products.length}개 품목)`;
 
-            // Render Product Mini Bars & Table
             renderDetailMiniBars();
             renderProductDetailTable();
         }
 
-        // 5. Back to Main Screen (뒤로가기 버튼)
         function goToMainScreen() {
             document.getElementById('screen-detail').classList.add('hidden');
             document.getElementById('screen-main').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Render Product Detail Mini Bars
         function renderDetailMiniBars() {
             const container = document.getElementById('detailProductMiniBars');
             container.innerHTML = '';
@@ -817,11 +790,11 @@
                 const bar = document.createElement('div');
                 bar.className = 'space-y-1';
                 bar.innerHTML = `
-                    <div class="flex justify-between text-xs font-medium">
-                        <span class="text-slate-800 font-bold truncate max-w-[280px]">${p.product_name} <span class="text-slate-400 font-normal">(${p.spec})</span></span>
-                        <span class="text-slate-900 font-black">${formatWon(p.sales_amount)} <span class="text-blue-600 font-bold">(${p.share_in_cust}%)</span></span>
+                    <div class="flex justify-between text-[11px] font-medium">
+                        <span class="text-slate-800 font-bold truncate max-w-[140px] sm:max-w-[280px]">${p.product_name} <span class="text-slate-400 font-normal">(${p.spec})</span></span>
+                        <span class="text-slate-900 font-black">${formatMillion(p.sales_amount)}백만 <span class="text-blue-600 font-bold">(${p.share_in_cust}%)</span></span>
                     </div>
-                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                    <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                         <div class="bg-gradient-to-r from-blue-500 to-indigo-600 h-full rounded-full transition-all duration-500" style="width: ${p.share_in_cust}%"></div>
                     </div>
                 `;
@@ -829,7 +802,6 @@
             });
         }
 
-        // Render Product Detail Table (평균단가 컬럼 없음, 금액순)
         function renderProductDetailTable() {
             if (!selectedCust) return;
             const tbody = document.getElementById('detailProductTableBody');
@@ -841,7 +813,6 @@
                 prods = prods.filter(p => p.product_name.toLowerCase().includes(search) || p.category_mid.toLowerCase().includes(search));
             }
 
-            // Always sorted by sales_amount descending
             prods.sort((a, b) => b.sales_amount - a.sales_amount);
 
             let subtotalQty = 0;
@@ -860,39 +831,36 @@
                 else if (p.category_mid.includes('제초제')) catBadge = 'bg-blue-50 text-blue-700 border border-blue-200';
 
                 tr.innerHTML = `
-                    <td class="py-3 px-4 text-center text-slate-400 font-medium">${idx + 1}</td>
-                    <td class="py-3 px-3 font-bold text-slate-900">${p.product_name}</td>
-                    <td class="py-3 px-2 text-slate-500">${p.spec}</td>
-                    <td class="py-3 px-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${catBadge}">${p.category_mid}</span></td>
-                    <td class="py-3 px-3 font-mono text-slate-400 text-[11px]">${p.product_code}</td>
-                    <td class="py-3 px-4 text-right font-medium text-slate-800">${formatNum(p.qty)} EA</td>
-                    <td class="py-3 px-4 text-right font-extrabold text-blue-700">${formatWon(p.sales_amount)}</td>
-                    <td class="py-3 px-4 text-right font-bold text-slate-700">${p.share_in_cust}%</td>
+                    <td class="py-2.5 px-3 text-center text-slate-400">${idx + 1}</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">${p.product_name}</td>
+                    <td class="py-2.5 px-2 text-slate-500">${p.spec}</td>
+                    <td class="py-2.5 px-2.5"><span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${catBadge}">${p.category_mid}</span></td>
+                    <td class="py-2.5 px-3 text-right font-medium text-slate-800">${formatNum(p.qty)} EA</td>
+                    <td class="py-2.5 px-3 text-right font-extrabold text-blue-700">${formatMillion(p.sales_amount)}</td>
+                    <td class="py-2.5 px-3 text-right font-bold text-slate-700">${p.share_in_cust}%</td>
                 `;
                 tbody.appendChild(tr);
             });
 
             document.getElementById('detailProductFooterQty').textContent = formatNum(subtotalQty);
-            document.getElementById('detailProductFooterSales').textContent = formatWon(subtotalSales);
-            document.getElementById('detailProductTableFooterCount').textContent = `품목 합계 (${prods.length}개)`;
+            document.getElementById('detailProductFooterSales').textContent = `${formatMillion(subtotalSales)} 백만`;
+            document.getElementById('detailProductTableFooterCount').textContent = `합계 (${prods.length}개 품목)`;
         }
 
-        // Sorting Switch (sales / name)
         function setSort(criteria) {
             currentSort = criteria;
             const btnSales = document.getElementById('sort-sales');
             const btnName = document.getElementById('sort-name');
             if (criteria === 'sales') {
-                btnSales.className = 'px-3 py-1 rounded-md bg-white text-blue-700 font-bold shadow-xs';
-                btnName.className = 'px-3 py-1 rounded-md text-slate-600 hover:text-slate-900 font-medium';
+                btnSales.className = 'px-2.5 py-1 rounded-md bg-white text-blue-700 font-bold shadow-2xs';
+                btnName.className = 'px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-medium';
             } else {
-                btnName.className = 'px-3 py-1 rounded-md bg-white text-blue-700 font-bold shadow-xs';
-                btnSales.className = 'px-3 py-1 rounded-md text-slate-600 hover:text-slate-900 font-medium';
+                btnName.className = 'px-2.5 py-1 rounded-md bg-white text-blue-700 font-bold shadow-2xs';
+                btnSales.className = 'px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-medium';
             }
             renderCustomerList();
         }
 
-        // Update Charts based on active Tab
         function updateCharts() {
             let activeList = [...customersData];
             if (currentTab !== 'ALL') {
@@ -900,7 +868,7 @@
             }
             activeList.sort((a, b) => b.sales_amount - a.sales_amount);
 
-            // 1. Bar Chart (Top 6 in active segment)
+            // 1. Bar Chart (Top 6)
             const topCusts = activeList.slice(0, 6);
             const ctxBar = document.getElementById('mainBarChart').getContext('2d');
             if (mainBarChartInstance) mainBarChartInstance.destroy();
@@ -914,12 +882,12 @@
             mainBarChartInstance = new Chart(ctxBar, {
                 type: 'bar',
                 data: {
-                    labels: topCusts.map(c => c.cust_name),
+                    labels: topCusts.map(c => c.cust_name.length > 7 ? c.cust_name.slice(0, 7) + '..' : c.cust_name),
                     datasets: [{
                         label: '판매금액 (백만원)',
-                        data: topCusts.map(c => Math.round(c.sales_amount / 1000000)),
+                        data: topCusts.map(c => Number((c.sales_amount / 1000000).toFixed(1))),
                         backgroundColor: barColors,
-                        borderRadius: 6,
+                        borderRadius: 4,
                         barPercentage: 0.65
                     }]
                 },
@@ -931,13 +899,13 @@
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
-                                label: (ctx) => ` 판매금액: ${formatWon(topCusts[ctx.dataIndex].sales_amount)}`
+                                label: (ctx) => ` 판매금액: ${formatMillion(topCusts[ctx.dataIndex].sales_amount)} 백만원`
                             }
                         }
                     },
                     scales: {
-                        x: { grid: { color: '#f1f5f9' }, ticks: { font: { family: 'Pretendard', size: 10 } } },
-                        y: { grid: { display: false }, ticks: { font: { family: 'Pretendard', size: 11, weight: 'bold' } } }
+                        x: { grid: { color: '#f1f5f9' }, ticks: { font: { family: 'Pretendard', size: 9 } } },
+                        y: { grid: { display: false }, ticks: { font: { family: 'Pretendard', size: 10, weight: 'bold' } } }
                     },
                     onClick: (evt, els) => {
                         if (els && els.length > 0) {
@@ -948,7 +916,7 @@
                 }
             });
 
-            // 2. Category Donut Chart for Active Segment
+            // 2. Donut Chart
             const catMap = {};
             activeList.forEach(c => {
                 c.products.forEach(p => {
@@ -956,7 +924,7 @@
                 });
             });
             const catLabels = Object.keys(catMap);
-            const catValues = Object.values(catMap);
+            const catValues = Object.values(catMap).map(v => Number((v / 1000000).toFixed(1)));
 
             const ctxCat = document.getElementById('mainCategoryChart').getContext('2d');
             if (mainCatChartInstance) mainCatChartInstance.destroy();
@@ -976,35 +944,34 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'bottom', labels: { boxWidth: 10, font: { family: 'Pretendard', size: 10 }, padding: 8 } },
-                        tooltip: { callbacks: { label: (ctx) => ` ${catLabels[ctx.dataIndex]}: ${formatWon(catValues[ctx.dataIndex])}` } }
+                        legend: { position: 'bottom', labels: { boxWidth: 8, font: { family: 'Pretendard', size: 9 }, padding: 6 } },
+                        tooltip: { callbacks: { label: (ctx) => ` ${catLabels[ctx.dataIndex]}: ${catValues[ctx.dataIndex]} 백만원` } }
                     },
                     cutout: '62%'
                 }
             });
         }
 
-        // CSV Export Functions
         function exportCSV() {
             const list = getFilteredCustomers();
-            let csv = '\uFEFF부문,매출처코드,매출처명,품번,품명,규격,품목분류,출고수량,판매금액,매출처내비중(%)\n';
+            let csv = '\uFEFF부문,매출처코드,매출처명,품번,품명,규격,품목분류,출고수량,판매금액(백만원),매출처내비중(%)\n';
             list.forEach(c => {
                 const segName = c.segment === 'GOLF' ? '골프장' : '특판';
                 c.products.forEach(p => {
-                    csv += `"${segName}","${c.cust_code}","${c.cust_name}","${p.product_code}","${p.product_name}","${p.spec}","${p.category_mid}",${p.qty},${p.sales_amount},${p.share_in_cust}\n`;
+                    csv += `"${segName}","${c.cust_code}","${c.cust_name}","${p.product_code}","${p.product_name}","${p.spec}","${p.category_mid}",${p.qty},${(p.sales_amount/1000000).toFixed(2)},${p.share_in_cust}\n`;
                 });
             });
-            downloadCSV(csv, `한국삼공_${currentTab}_매출원장.csv`);
+            downloadCSV(csv, `한국삼공_${currentTab}_매출원장(백만단위).csv`);
         }
 
         function exportDetailCustCSV() {
             if (!selectedCust) return;
             const segName = selectedCust.segment === 'GOLF' ? '골프장' : '특판';
-            let csv = '\uFEFF부문,매출처코드,매출처명,품번,품명,규격,품목분류,출고수량,판매금액,매출처내비중(%)\n';
+            let csv = '\uFEFF부문,매출처코드,매출처명,품번,품명,규격,품목분류,출고수량,판매금액(백만원),매출처내비중(%)\n';
             selectedCust.products.forEach(p => {
-                csv += `"${segName}","${selectedCust.cust_code}","${selectedCust.cust_name}","${p.product_code}","${p.product_name}","${p.spec}","${p.category_mid}",${p.qty},${p.sales_amount},${p.share_in_cust}\n`;
+                csv += `"${segName}","${selectedCust.cust_code}","${selectedCust.cust_name}","${p.product_code}","${p.product_name}","${p.spec}","${p.category_mid}",${p.qty},${(p.sales_amount/1000000).toFixed(2)},${p.share_in_cust}\n`;
             });
-            downloadCSV(csv, `${selectedCust.cust_name}_품목별판매상세.csv`);
+            downloadCSV(csv, `${selectedCust.cust_name}_품목별판매상세(백만단위).csv`);
         }
 
         function downloadCSV(csvContent, filename) {
