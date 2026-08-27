@@ -94,9 +94,9 @@
                             <i class="fa-solid fa-layer-group"></i>
                         </span>
                     </div>
-                    <div class="text-2xl sm:text-3xl font-black text-slate-900">3,707</div>
+                    <div class="text-2xl sm:text-3xl font-black text-slate-900">3,707 <span class="text-sm sm:text-base font-bold text-slate-600">백만</span></div>
                     <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-500 mt-1 sm:mt-2 font-medium">
-                        <span>19개사 (VAT포함 4,078)</span>
+                        <span>19개사 (VAT포함 4,078 백만)</span>
                         <span class="font-bold text-slate-700">100.0%</span>
                     </div>
                     <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1 sm:h-1.5 bg-slate-900"></div>
@@ -114,9 +114,9 @@
                             <i class="fa-solid fa-flag"></i>
                         </span>
                     </div>
-                    <div class="text-2xl sm:text-3xl font-black text-emerald-950">2,120</div>
+                    <div class="text-2xl sm:text-3xl font-black text-emerald-950">2,120 <span class="text-sm sm:text-base font-bold text-emerald-700">백만</span></div>
                     <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-500 mt-1 sm:mt-2 font-medium">
-                        <span>8개 거래처 (VAT포함 2,332)</span>
+                        <span>8개 거래처 (VAT포함 2,332 백만)</span>
                         <span class="font-black text-emerald-600">57.2%</span>
                     </div>
                     <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1 sm:h-1.5 bg-emerald-600"></div>
@@ -134,9 +134,9 @@
                             <i class="fa-solid fa-building"></i>
                         </span>
                     </div>
-                    <div class="text-2xl sm:text-3xl font-black text-blue-950">1,588</div>
+                    <div class="text-2xl sm:text-3xl font-black text-blue-950">1,588 <span class="text-sm sm:text-base font-bold text-blue-700">백만</span></div>
                     <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-500 mt-1 sm:mt-2 font-medium">
-                        <span>11개 거래처 (VAT포함 1,746)</span>
+                        <span>11개 거래처 (VAT포함 1,746 백만)</span>
                         <span class="font-black text-blue-600">42.8%</span>
                     </div>
                     <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1 sm:h-1.5 bg-blue-600"></div>
@@ -227,7 +227,7 @@
                 <!-- Footer Summary -->
                 <div class="p-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600 font-semibold">
                     <span id="listFooterSummaryText">19개 매출처 합계</span>
-                    <span>총 판매액: <strong class="text-blue-700 font-black text-sm" id="listFooterTotalSales">3,707</strong></span>
+                    <span>총 판매액: <strong class="text-blue-700 font-black text-sm" id="listFooterTotalSales">3,707 백만</strong></span>
                 </div>
 
             </div>
@@ -264,11 +264,11 @@
                     <div class="grid grid-cols-2 gap-2 sm:flex sm:items-center">
                         <div class="bg-blue-50/80 border border-blue-100 p-2.5 sm:px-4 sm:py-2 rounded-xl text-left">
                             <div class="text-[10px] sm:text-[11px] font-bold text-blue-600 uppercase">총 판매금액 (공급가)</div>
-                            <div class="text-xl sm:text-2xl font-black text-blue-900" id="detailSalesAmount">840</div>
+                            <div class="text-xl sm:text-2xl font-black text-blue-900" id="detailSalesAmount">840 <span class="text-xs font-bold text-blue-700">백만</span></div>
                         </div>
                         <div class="bg-slate-50 border border-slate-200 p-2.5 sm:px-4 sm:py-2 rounded-xl text-left">
                             <div class="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase">합계금액 (VAT포함)</div>
-                            <div class="text-base sm:text-lg font-extrabold text-slate-800 mt-0.5 sm:mt-0" id="detailTotalAmount">924</div>
+                            <div class="text-base sm:text-lg font-extrabold text-slate-800 mt-0.5 sm:mt-0" id="detailTotalAmount">924 <span class="text-[11px] font-medium text-slate-500">백만</span></div>
                         </div>
                     </div>
                 </div>
@@ -338,7 +338,7 @@
                     <span id="detailProductTableFooterCount">품목 합계</span>
                     <div class="flex items-center gap-3">
                         <span class="hidden sm:inline">총 수량: <strong class="text-slate-900" id="detailProductFooterQty">45,200</strong> EA</span>
-                        <span>총 판매금액: <strong class="text-blue-700 font-black text-sm" id="detailProductFooterSales">840</strong></span>
+                        <span>총 판매금액: <strong class="text-blue-700 font-black text-sm" id="detailProductFooterSales">840 백만</strong></span>
                     </div>
                 </div>
 
@@ -724,8 +724,8 @@
                         <div class="font-bold text-slate-900 hover:text-blue-600 transition">${cust.cust_name}</div>
                     </td>
                     <td class="py-2.5 px-2.5 text-slate-400 font-mono text-[11px]">${cust.cust_code}</td>
-                    <td class="py-2.5 px-3 text-right font-black text-slate-900">${formatMillion(cust.sales_amount)}</td>
-                    <td class="py-2.5 px-3 text-right text-slate-500">${formatMillion(cust.total_amount)}</td>
+                    <td class="py-2.5 px-3 text-right font-black text-slate-900">${formatMillion(cust.sales_amount)} 백만</td>
+                    <td class="py-2.5 px-3 text-right text-slate-500">${formatMillion(cust.total_amount)} 백만</td>
                     <td class="py-2.5 px-2.5 text-right font-bold text-blue-700">${cust.share_total}%</td>
                     <td class="py-2.5 px-3 text-center">
                         <button class="px-2 py-1 rounded bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-[10px] transition">
@@ -736,7 +736,7 @@
                 tbody.appendChild(tr);
             });
 
-            document.getElementById('listFooterTotalSales').textContent = formatMillion(subtotal);
+            document.getElementById('listFooterTotalSales').textContent = `${formatMillion(subtotal)} 백만`;
             document.getElementById('listFooterSummaryText').textContent = `${list.length}개 매출처 합계`;
         }
 
@@ -760,8 +760,8 @@
 
             document.getElementById('detailCustName').textContent = selectedCust.cust_name;
             document.getElementById('detailCustMeta').textContent = `코드: ${selectedCust.cust_code} | 지역: ${selectedCust.region}`;
-            document.getElementById('detailSalesAmount').textContent = formatMillion(selectedCust.sales_amount);
-            document.getElementById('detailTotalAmount').textContent = formatMillion(selectedCust.total_amount);
+            document.getElementById('detailSalesAmount').innerHTML = `${formatMillion(selectedCust.sales_amount)} <span class="text-xs font-bold text-blue-700">백만</span>`;
+            document.getElementById('detailTotalAmount').innerHTML = `${formatMillion(selectedCust.total_amount)} <span class="text-[11px] font-medium text-slate-500">백만</span>`;
             document.getElementById('detailProductCountText').textContent = `(${selectedCust.products.length}개 품목)`;
 
             renderDetailMiniBars();
@@ -785,7 +785,7 @@
                 bar.innerHTML = `
                     <div class="flex justify-between text-[11px] font-medium">
                         <span class="text-slate-800 font-bold truncate max-w-[140px] sm:max-w-[280px]">${p.product_name} <span class="text-slate-400 font-normal">(${p.spec})</span></span>
-                        <span class="text-slate-900 font-black">${formatMillion(p.sales_amount)} <span class="text-blue-600 font-bold">(${p.share_in_cust}%)</span></span>
+                        <span class="text-slate-900 font-black">${formatMillion(p.sales_amount)} 백만 <span class="text-blue-600 font-bold">(${p.share_in_cust}%)</span></span>
                     </div>
                     <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                         <div class="bg-gradient-to-r from-blue-500 to-indigo-600 h-full rounded-full transition-all duration-500" style="width: ${p.share_in_cust}%"></div>
@@ -829,14 +829,14 @@
                     <td class="py-2.5 px-2 text-slate-500">${p.spec}</td>
                     <td class="py-2.5 px-2.5"><span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${catBadge}">${p.category_mid}</span></td>
                     <td class="py-2.5 px-3 text-right font-medium text-slate-800">${formatNum(p.qty)} EA</td>
-                    <td class="py-2.5 px-3 text-right font-extrabold text-blue-700">${formatMillion(p.sales_amount)}</td>
+                    <td class="py-2.5 px-3 text-right font-extrabold text-blue-700">${formatMillion(p.sales_amount)} 백만</td>
                     <td class="py-2.5 px-3 text-right font-bold text-slate-700">${p.share_in_cust}%</td>
                 `;
                 tbody.appendChild(tr);
             });
 
             document.getElementById('detailProductFooterQty').textContent = formatNum(subtotalQty);
-            document.getElementById('detailProductFooterSales').textContent = formatMillion(subtotalSales);
+            document.getElementById('detailProductFooterSales').textContent = `${formatMillion(subtotalSales)} 백만`;
             document.getElementById('detailProductTableFooterCount').textContent = `합계 (${prods.length}개 품목)`;
         }
 
@@ -892,7 +892,7 @@
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
-                                label: (ctx) => ` 판매금액: ${formatMillion(topCusts[ctx.dataIndex].sales_amount)}`
+                                label: (ctx) => ` 판매금액: ${formatMillion(topCusts[ctx.dataIndex].sales_amount)} 백만`
                             }
                         }
                     },
@@ -938,7 +938,7 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: { position: 'bottom', labels: { boxWidth: 8, font: { family: 'Pretendard', size: 9 }, padding: 6 } },
-                        tooltip: { callbacks: { label: (ctx) => ` ${catLabels[ctx.dataIndex]}: ${catValues[ctx.dataIndex]}` } }
+                        tooltip: { callbacks: { label: (ctx) => ` ${catLabels[ctx.dataIndex]}: ${catValues[ctx.dataIndex]} 백만` } }
                     },
                     cutout: '62%'
                 }
