@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>한국삼공 매출현황 (골프장 / 특판) - (단위: 백만)</title>
+    <title>한국삼공 매출현황 (골프장 / 특판)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN -->
@@ -58,10 +58,9 @@
                 <div>
                     <div class="flex items-center gap-1.5 flex-wrap">
                         <h1 class="text-base sm:text-lg font-bold tracking-tight text-white leading-snug">한국삼공 매출현황</h1>
-                        <span class="bg-blue-500/20 text-blue-300 text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-bold border border-blue-500/30">단위: 백만원</span>
                         <span class="bg-emerald-500/20 text-emerald-300 text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-bold border border-emerald-500/30">2026.08.27</span>
                     </div>
-                    <p class="text-[11px] text-slate-400">골프장·특판 사업부문 실시간 출고 대시보드 (금액단위: 백만원)</p>
+                    <p class="text-[11px] text-slate-400">골프장·특판 사업부문 실시간 출고 대시보드</p>
                 </div>
             </div>
             <div class="flex items-center gap-2 no-print self-end sm:self-auto">
@@ -83,21 +82,21 @@
         <!-- ========================================== -->
         <div id="screen-main" class="space-y-4 sm:space-y-6 fade-in">
 
-            <!-- 1. BIG SEGMENT SWITCHER TABS (단위: 백만 표기) -->
+            <!-- 1. BIG SEGMENT SWITCHER TABS (정수 형태) -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4">
                 
                 <!-- 전체 통합 -->
                 <button onclick="switchTab('ALL')" id="tab-ALL" 
                         class="tab-btn p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border text-left transition-all relative overflow-hidden bg-white border-slate-200 shadow-2xs">
                     <div class="flex items-center justify-between mb-1 sm:mb-2">
-                        <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-500">전체 통합 (단위: 백만)</span>
+                        <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-500">전체 통합</span>
                         <span class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center text-xs font-bold">
                             <i class="fa-solid fa-layer-group"></i>
                         </span>
                     </div>
-                    <div class="text-xl sm:text-2xl font-black text-slate-900">3,707.3 <span class="text-xs sm:text-sm font-bold text-slate-500">백만</span></div>
+                    <div class="text-2xl sm:text-3xl font-black text-slate-900">3,707</div>
                     <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-500 mt-1 sm:mt-2 font-medium">
-                        <span>19개사 (VAT포함 4,078.1백만)</span>
+                        <span>19개사 (VAT포함 4,078)</span>
                         <span class="font-bold text-slate-700">100.0%</span>
                     </div>
                     <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1 sm:h-1.5 bg-slate-900"></div>
@@ -109,15 +108,15 @@
                     <div class="flex items-center justify-between mb-1 sm:mb-2">
                         <div class="flex items-center gap-1.5">
                             <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                            <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-emerald-700">⛳ 골프장 부문 (단위: 백만)</span>
+                            <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-emerald-700">⛳ 골프장 부문</span>
                         </div>
                         <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs font-bold">
                             <i class="fa-solid fa-flag"></i>
                         </span>
                     </div>
-                    <div class="text-xl sm:text-2xl font-black text-emerald-950">2,119.6 <span class="text-xs sm:text-sm font-bold text-emerald-700">백만</span></div>
+                    <div class="text-2xl sm:text-3xl font-black text-emerald-950">2,120</div>
                     <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-500 mt-1 sm:mt-2 font-medium">
-                        <span>8개 거래처 (VAT포함 2,331.6백만)</span>
+                        <span>8개 거래처 (VAT포함 2,332)</span>
                         <span class="font-black text-emerald-600">57.2%</span>
                     </div>
                     <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1 sm:h-1.5 bg-emerald-600"></div>
@@ -129,15 +128,15 @@
                     <div class="flex items-center justify-between mb-1 sm:mb-2">
                         <div class="flex items-center gap-1.5">
                             <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-                            <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-blue-700">🏢 특판(일반) 부문 (단위: 백만)</span>
+                            <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-blue-700">🏢 특판(일반) 부문</span>
                         </div>
                         <span class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold">
                             <i class="fa-solid fa-building"></i>
                         </span>
                     </div>
-                    <div class="text-xl sm:text-2xl font-black text-blue-950">1,587.7 <span class="text-xs sm:text-sm font-bold text-blue-700">백만</span></div>
+                    <div class="text-2xl sm:text-3xl font-black text-blue-950">1,588</div>
                     <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-500 mt-1 sm:mt-2 font-medium">
-                        <span>11개 거래처 (VAT포함 1,746.5백만)</span>
+                        <span>11개 거래처 (VAT포함 1,746)</span>
                         <span class="font-black text-blue-600">42.8%</span>
                     </div>
                     <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1 sm:h-1.5 bg-blue-600"></div>
@@ -154,7 +153,6 @@
                             <span class="w-2 h-2 rounded-full bg-blue-600"></span>
                             <h2 class="text-xs sm:text-sm font-bold text-slate-800" id="barChartTitle">주요 매출처 순위 TOP 6 (클릭 시 이동)</h2>
                         </div>
-                        <span class="text-[10px] sm:text-xs text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded">단위: 백만원</span>
                     </div>
                     <div class="relative h-52 sm:h-60 w-full">
                         <canvas id="mainBarChart"></canvas>
@@ -185,7 +183,6 @@
                         <div class="flex items-center gap-2">
                             <h3 class="font-extrabold text-slate-900 text-sm sm:text-base" id="listSectionTitle">매출처별 판매현황</h3>
                             <span class="bg-blue-100 text-blue-800 text-[11px] px-2 py-0.5 rounded-full font-bold" id="listCountBadge">19개사</span>
-                            <span class="text-[11px] text-slate-500 font-bold bg-slate-200/70 px-2 py-0.5 rounded">(단위: 백만)</span>
                         </div>
                         <span class="text-[10px] text-blue-600 font-semibold sm:hidden bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
                             👉 좌우 스크롤
@@ -215,8 +212,8 @@
                                 <th class="py-2.5 px-2.5 w-20">구분</th>
                                 <th class="py-2.5 px-3">매출처명</th>
                                 <th class="py-2.5 px-2.5">코드</th>
-                                <th class="py-2.5 px-3 text-right">판매금액 <span class="text-[10px] text-blue-600 font-bold">(백만)</span></th>
-                                <th class="py-2.5 px-3 text-right">합계 <span class="text-[10px] text-slate-500 font-bold">(백만)</span></th>
+                                <th class="py-2.5 px-3 text-right">판매금액</th>
+                                <th class="py-2.5 px-3 text-right">합계금액</th>
                                 <th class="py-2.5 px-2.5 text-right w-16">비중</th>
                                 <th class="py-2.5 px-3 text-center w-20">조회</th>
                             </tr>
@@ -230,7 +227,7 @@
                 <!-- Footer Summary -->
                 <div class="p-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600 font-semibold">
                     <span id="listFooterSummaryText">19개 매출처 합계</span>
-                    <span>총 판매액: <strong class="text-blue-700 font-black text-sm" id="listFooterTotalSales">3,707.3 백만</strong></span>
+                    <span>총 판매액: <strong class="text-blue-700 font-black text-sm" id="listFooterTotalSales">3,707</strong></span>
                 </div>
 
             </div>
@@ -253,10 +250,7 @@
                         <i class="fa-solid fa-arrow-left"></i>
                         <span>← 전체 목록으로 (뒤로가기)</span>
                     </button>
-                    <div class="flex items-center gap-2">
-                        <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">단위: 백만원</span>
-                        <span id="detailBadgeSegment" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">⛳ 골프장</span>
-                    </div>
+                    <span id="detailBadgeSegment" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">⛳ 골프장</span>
                 </div>
 
                 <!-- Customer Identity -->
@@ -270,11 +264,11 @@
                     <div class="grid grid-cols-2 gap-2 sm:flex sm:items-center">
                         <div class="bg-blue-50/80 border border-blue-100 p-2.5 sm:px-4 sm:py-2 rounded-xl text-left">
                             <div class="text-[10px] sm:text-[11px] font-bold text-blue-600 uppercase">총 판매금액 (공급가)</div>
-                            <div class="text-base sm:text-xl font-black text-blue-900" id="detailSalesAmount">839.7 <span class="text-xs font-bold text-blue-700">백만</span></div>
+                            <div class="text-xl sm:text-2xl font-black text-blue-900" id="detailSalesAmount">840</div>
                         </div>
                         <div class="bg-slate-50 border border-slate-200 p-2.5 sm:px-4 sm:py-2 rounded-xl text-left">
                             <div class="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase">합계금액 (VAT포함)</div>
-                            <div class="text-xs sm:text-base font-extrabold text-slate-800 mt-0.5 sm:mt-0" id="detailTotalAmount">923.7 <span class="text-[11px] font-medium text-slate-500">백만</span></div>
+                            <div class="text-base sm:text-lg font-extrabold text-slate-800 mt-0.5 sm:mt-0" id="detailTotalAmount">924</div>
                         </div>
                     </div>
                 </div>
@@ -288,7 +282,7 @@
                         <span class="w-2 h-2 rounded-full bg-blue-600"></span>
                         품목별 판매액 TOP 5 점유율
                     </h4>
-                    <span class="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded">단위: 백만</span>
+                    <span class="text-[10px] text-slate-400">매출 기여도</span>
                 </div>
                 <div id="detailProductMiniBars" class="space-y-2 text-xs">
                     <!-- Populated dynamically via JS -->
@@ -304,7 +298,6 @@
                             <i class="fa-solid fa-box-open text-blue-600 text-xs"></i>
                             <h3 class="font-bold text-slate-900 text-xs sm:text-sm">품목별 출고 상세 명세</h3>
                             <span class="text-[11px] text-slate-500" id="detailProductCountText">(16개 품목)</span>
-                            <span class="text-[10px] text-slate-500 font-bold bg-slate-200/70 px-1.5 py-0.5 rounded">(단위: 백만)</span>
                         </div>
                         <span class="text-[10px] text-blue-600 font-semibold sm:hidden bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
                             👉 좌우 스크롤
@@ -330,7 +323,7 @@
                                 <th class="py-2.5 px-2">규격</th>
                                 <th class="py-2.5 px-2.5">분류</th>
                                 <th class="py-2.5 px-3 text-right">출고수량</th>
-                                <th class="py-2.5 px-3 text-right">판매금액 <span class="text-[10px] text-blue-600 font-bold">(백만)</span></th>
+                                <th class="py-2.5 px-3 text-right">판매금액</th>
                                 <th class="py-2.5 px-3 text-right w-16">기여도</th>
                             </tr>
                         </thead>
@@ -345,7 +338,7 @@
                     <span id="detailProductTableFooterCount">품목 합계</span>
                     <div class="flex items-center gap-3">
                         <span class="hidden sm:inline">총 수량: <strong class="text-slate-900" id="detailProductFooterQty">45,200</strong> EA</span>
-                        <span>총 판매금액: <strong class="text-blue-700 font-black text-sm" id="detailProductFooterSales">839.7 백만</strong></span>
+                        <span>총 판매금액: <strong class="text-blue-700 font-black text-sm" id="detailProductFooterSales">840</strong></span>
                     </div>
                 </div>
 
@@ -358,8 +351,8 @@
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 text-xs py-4 mt-8 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:flex sm:justify-between sm:text-left text-[11px]">
-            <div><strong class="text-slate-200">한국삼공 출고관리 분석 대시보드</strong> | 2026-08-27 (단위: 백만원)</div>
-            <div class="text-slate-500 mt-1 sm:mt-0">골프장 & 특판 백만 단위 최적화 버전</div>
+            <div><strong class="text-slate-200">한국삼공 출고관리 분석 대시보드</strong> | 2026-08-27</div>
+            <div class="text-slate-500 mt-1 sm:mt-0">골프장 & 특판 부문 대시보드</div>
         </div>
     </footer>
 
@@ -644,11 +637,11 @@
         let mainBarChartInstance = null;
         let mainCatChartInstance = null;
 
-        // Million Formatter
+        // Clean Integer Million Formatter (No Decimals)
         function formatMillion(num) {
-            if (!num || num === 0) return '0.0';
-            const m = num / 1000000;
-            return m.toLocaleString('ko-KR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+            if (!num || num === 0) return '0';
+            const m = Math.round(num / 1000000);
+            return m.toLocaleString('ko-KR');
         }
 
         function formatNum(num) {
@@ -743,8 +736,8 @@
                 tbody.appendChild(tr);
             });
 
-            document.getElementById('listFooterTotalSales').textContent = `${formatMillion(subtotal)} 백만`;
-            document.getElementById('listFooterSummaryText').textContent = `${list.length}개 매출처 합계 (단위: 백만)`;
+            document.getElementById('listFooterTotalSales').textContent = formatMillion(subtotal);
+            document.getElementById('listFooterSummaryText').textContent = `${list.length}개 매출처 합계`;
         }
 
         function openDetailScreen(custCode) {
@@ -767,8 +760,8 @@
 
             document.getElementById('detailCustName').textContent = selectedCust.cust_name;
             document.getElementById('detailCustMeta').textContent = `코드: ${selectedCust.cust_code} | 지역: ${selectedCust.region}`;
-            document.getElementById('detailSalesAmount').innerHTML = `${formatMillion(selectedCust.sales_amount)} <span class="text-xs font-bold text-blue-700">백만</span>`;
-            document.getElementById('detailTotalAmount').innerHTML = `${formatMillion(selectedCust.total_amount)} <span class="text-[11px] font-medium text-slate-500">백만</span>`;
+            document.getElementById('detailSalesAmount').textContent = formatMillion(selectedCust.sales_amount);
+            document.getElementById('detailTotalAmount').textContent = formatMillion(selectedCust.total_amount);
             document.getElementById('detailProductCountText').textContent = `(${selectedCust.products.length}개 품목)`;
 
             renderDetailMiniBars();
@@ -792,7 +785,7 @@
                 bar.innerHTML = `
                     <div class="flex justify-between text-[11px] font-medium">
                         <span class="text-slate-800 font-bold truncate max-w-[140px] sm:max-w-[280px]">${p.product_name} <span class="text-slate-400 font-normal">(${p.spec})</span></span>
-                        <span class="text-slate-900 font-black">${formatMillion(p.sales_amount)}백만 <span class="text-blue-600 font-bold">(${p.share_in_cust}%)</span></span>
+                        <span class="text-slate-900 font-black">${formatMillion(p.sales_amount)} <span class="text-blue-600 font-bold">(${p.share_in_cust}%)</span></span>
                     </div>
                     <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                         <div class="bg-gradient-to-r from-blue-500 to-indigo-600 h-full rounded-full transition-all duration-500" style="width: ${p.share_in_cust}%"></div>
@@ -843,7 +836,7 @@
             });
 
             document.getElementById('detailProductFooterQty').textContent = formatNum(subtotalQty);
-            document.getElementById('detailProductFooterSales').textContent = `${formatMillion(subtotalSales)} 백만`;
+            document.getElementById('detailProductFooterSales').textContent = formatMillion(subtotalSales);
             document.getElementById('detailProductTableFooterCount').textContent = `합계 (${prods.length}개 품목)`;
         }
 
@@ -884,8 +877,8 @@
                 data: {
                     labels: topCusts.map(c => c.cust_name.length > 7 ? c.cust_name.slice(0, 7) + '..' : c.cust_name),
                     datasets: [{
-                        label: '판매금액 (백만원)',
-                        data: topCusts.map(c => Number((c.sales_amount / 1000000).toFixed(1))),
+                        label: '판매금액',
+                        data: topCusts.map(c => Math.round(c.sales_amount / 1000000)),
                         backgroundColor: barColors,
                         borderRadius: 4,
                         barPercentage: 0.65
@@ -899,7 +892,7 @@
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
-                                label: (ctx) => ` 판매금액: ${formatMillion(topCusts[ctx.dataIndex].sales_amount)} 백만원`
+                                label: (ctx) => ` 판매금액: ${formatMillion(topCusts[ctx.dataIndex].sales_amount)}`
                             }
                         }
                     },
@@ -924,7 +917,7 @@
                 });
             });
             const catLabels = Object.keys(catMap);
-            const catValues = Object.values(catMap).map(v => Number((v / 1000000).toFixed(1)));
+            const catValues = Object.values(catMap).map(v => Math.round(v / 1000000));
 
             const ctxCat = document.getElementById('mainCategoryChart').getContext('2d');
             if (mainCatChartInstance) mainCatChartInstance.destroy();
@@ -945,7 +938,7 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: { position: 'bottom', labels: { boxWidth: 8, font: { family: 'Pretendard', size: 9 }, padding: 6 } },
-                        tooltip: { callbacks: { label: (ctx) => ` ${catLabels[ctx.dataIndex]}: ${catValues[ctx.dataIndex]} 백만원` } }
+                        tooltip: { callbacks: { label: (ctx) => ` ${catLabels[ctx.dataIndex]}: ${catValues[ctx.dataIndex]}` } }
                     },
                     cutout: '62%'
                 }
@@ -954,24 +947,24 @@
 
         function exportCSV() {
             const list = getFilteredCustomers();
-            let csv = '\uFEFF부문,매출처코드,매출처명,품번,품명,규격,품목분류,출고수량,판매금액(백만원),매출처내비중(%)\n';
+            let csv = '\uFEFF부문,매출처코드,매출처명,품번,품명,규격,품목분류,출고수량,판매금액,매출처내비중(%)\n';
             list.forEach(c => {
                 const segName = c.segment === 'GOLF' ? '골프장' : '특판';
                 c.products.forEach(p => {
-                    csv += `"${segName}","${c.cust_code}","${c.cust_name}","${p.product_code}","${p.product_name}","${p.spec}","${p.category_mid}",${p.qty},${(p.sales_amount/1000000).toFixed(2)},${p.share_in_cust}\n`;
+                    csv += `"${segName}","${c.cust_code}","${c.cust_name}","${p.product_code}","${p.product_name}","${p.spec}","${p.category_mid}",${p.qty},${Math.round(p.sales_amount/1000000)},${p.share_in_cust}\n`;
                 });
             });
-            downloadCSV(csv, `한국삼공_${currentTab}_매출원장(백만단위).csv`);
+            downloadCSV(csv, `한국삼공_${currentTab}_매출원장.csv`);
         }
 
         function exportDetailCustCSV() {
             if (!selectedCust) return;
             const segName = selectedCust.segment === 'GOLF' ? '골프장' : '특판';
-            let csv = '\uFEFF부문,매출처코드,매출처명,품번,품명,규격,품목분류,출고수량,판매금액(백만원),매출처내비중(%)\n';
+            let csv = '\uFEFF부문,매출처코드,매출처명,품번,품명,규격,품목분류,출고수량,판매금액,매출처내비중(%)\n';
             selectedCust.products.forEach(p => {
-                csv += `"${segName}","${selectedCust.cust_code}","${selectedCust.cust_name}","${p.product_code}","${p.product_name}","${p.spec}","${p.category_mid}",${p.qty},${(p.sales_amount/1000000).toFixed(2)},${p.share_in_cust}\n`;
+                csv += `"${segName}","${selectedCust.cust_code}","${selectedCust.cust_name}","${p.product_code}","${p.product_name}","${p.spec}","${p.category_mid}",${p.qty},${Math.round(p.sales_amount/1000000)},${p.share_in_cust}\n`;
             });
-            downloadCSV(csv, `${selectedCust.cust_name}_품목별판매상세(백만단위).csv`);
+            downloadCSV(csv, `${selectedCust.cust_name}_품목별판매상세.csv`);
         }
 
         function downloadCSV(csvContent, filename) {
